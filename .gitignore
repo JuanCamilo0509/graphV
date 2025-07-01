@@ -1,0 +1,7 @@
+/build/
+/.ccls-cache/
+/compile_commands.json
+run.sh
+testing_container/
+
+
