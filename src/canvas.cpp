@@ -3,6 +3,14 @@ void Canvas::init() {
   initscr();
   noecho();
   curs_set(0);
+  start_color();
+  init_pair(1, COLOR_RED, COLOR_BLACK);
+  init_pair(2, COLOR_GREEN, COLOR_BLACK);
+  init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+  init_pair(4, COLOR_BLUE, COLOR_BLACK);
+  init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+  init_pair(6, COLOR_CYAN, COLOR_BLACK);
+  init_pair(7, COLOR_WHITE, COLOR_BLACK);
 }
 void Canvas::getScreenSize(int &x, int &y) { getmaxyx(stdscr, y, x); }
 
@@ -67,10 +75,16 @@ void Canvas::plotLine(int x0, int y0, int x1, int y1) {
     }
   }
 }
-void Canvas::printNode(Node node) { mvprintw(node.py, node.px, "●"); };
-
+void Canvas::printNodePosition(Node node) {
+  attron(COLOR_PAIR(node.color_id));
+  mvprintw(node.position.y, node.position.x, "●");
+  attroff(COLOR_PAIR(node.color_id));
+};
 void Canvas::getUserCharacter() { getch(); }
 
-void Canvas::update() { refresh(); }
+void Canvas::update() {
+  refresh();
+  clear();
+}
 
 void Canvas::killCanvas() { endwin(); }

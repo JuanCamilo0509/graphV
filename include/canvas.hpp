@@ -1,4 +1,4 @@
-#include "node.hpp"
+#include "types.hpp"
 #include <cstdlib>
 #include <ncurses.h>
 #include <iostream>
@@ -13,7 +13,7 @@ public:
   void killCanvas();
   void update();
   void getUserCharacter();
-  void printNode(Node node);
+  void printNodePosition(Node node);
 
 private:
   void plotLineV(int x0, int y0, int x1, int y1);
