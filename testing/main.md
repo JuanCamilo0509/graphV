@@ -1,1 +1,1 @@
-[archivoDos](archivoDos.txt)
+[archivoDos](./archivoDos.txt)

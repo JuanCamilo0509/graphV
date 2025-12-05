@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
@@ -29,3 +30,5 @@ public:
 
   void moveNode(const Vec2 &force, float &t, float damping);
 };
+
+std::ostream &operator<<(ostream &os, const Node &n);

@@ -1,9 +1,7 @@
 #include "Graph.hpp"
+#include <iostream>
 
-Node *Graph::file2Node(string file) {
-  Node *n = new Node(file);
-  return n;
-}
+Graph::Graph() {};
 
 vector<string> Graph::getLinks(string file) {
   vector<string> links;
@@ -14,14 +12,15 @@ vector<string> Graph::getLinks(string file) {
   while (getline(in, line)) {
     size_t pos = 0;
     while (true) {
-      size_t start = line.find(")[", pos);
+      size_t start = line.find("](", pos);
       if (start == string::npos)
         break;
 
-      size_t end = line.find("]", start + 1);
+      size_t end = line.find(")", start + 1);
       if (end == string::npos)
         break;
-      string link = line.substr(start + 1, end - start - 1);
+      // Skipping ]( at the start.
+      string link = line.substr(start + 2, end - start - 2);
       links.push_back(link);
 
       pos = end + 1;
@@ -30,6 +29,7 @@ vector<string> Graph::getLinks(string file) {
   return links;
 };
 
+// BUG: between absolute and relative path
 void Graph::getNodes(const string &rootFolder) {
 
   for (auto &entry :
@@ -49,7 +49,7 @@ void Graph::getNodes(const string &rootFolder) {
     const string &path = p.first;
     Node *node = p.second;
 
-    vector<string> links = getLinks(path); // <-- tu parser
+    vector<string> links = getLinks(path);
 
     for (const string &ref : links) {
       inverted[ref].push_back(node);
