@@ -3,9 +3,9 @@
 #include <string>
 #include <vector>
 using namespace std;
-struct Vec2 {
-  float x;
-  float y;
+template <typename T> struct Vec2 {
+  T x;
+  T y;
   Vec2 &operator+=(const Vec2 &other) {
     x += other.x;
     y += other.y;
@@ -14,21 +14,21 @@ struct Vec2 {
 };
 class Node {
 public:
-  Node(string file) {
+  Node(string file, int x, int y) {
     path = file;
-    position = {0, 0};
+    position = {x, y};
     Forces = {0, 0};
     velocity = {0, 0};
     neighbours = {};
   };
 
-  Vec2 position;
-  Vec2 Forces;
-  Vec2 velocity;
+  Vec2<int> position;
+  Vec2<float> Forces;
+  Vec2<float> velocity;
   string path;
   vector<Node *> neighbours;
 
-  void moveNode(const Vec2 &force, float &t, float damping);
+  void moveNode(const Vec2<float> &force, float &t, float damping);
 };
 
 std::ostream &operator<<(ostream &os, const Node &n);

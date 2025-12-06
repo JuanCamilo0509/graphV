@@ -1,7 +1,8 @@
 #include "Graph.hpp"
 #include <iostream>
 
-Graph::Graph() {};
+random_device rd;
+mt19937 gen(rd());
 
 vector<string> Graph::getLinks(string file) {
   vector<string> links;
@@ -29,16 +30,19 @@ vector<string> Graph::getLinks(string file) {
   return links;
 };
 
-// BUG: between absolute and relative path
-void Graph::getNodes(const string &rootFolder) {
+int getRandom(int value) {
+  uniform_int_distribution<> dist(0, value);
+  return dist(gen);
+};
 
+void Graph::getNodes(const string &rootFolder) {
   for (auto &entry :
        std::filesystem::recursive_directory_iterator(rootFolder)) {
     if (entry.is_regular_file()) {
       string path = entry.path().string();
 
       if (nodes.find(path) == nodes.end()) {
-        nodes[path] = new Node(path);
+        nodes[path] = new Node(path, getRandom(width), getRandom(height));
       }
     }
   }

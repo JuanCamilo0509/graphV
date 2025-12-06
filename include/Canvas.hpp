@@ -14,8 +14,9 @@ public:
     curs_set(0);
     setlocale(LC_ALL, "");
   };
+  void sectionGraph(Node &node);
   void getScreenSize(int &x, int &y);
-  void printNodePosition(Node node);
+  void printNodePosition(Node &node);
   void killCanvas();
   void getUserCharacter();
   void update();
