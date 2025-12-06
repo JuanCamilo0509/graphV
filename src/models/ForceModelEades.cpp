@@ -29,6 +29,7 @@ Vec2<float> ForceModelEades::repulsiveForce(const Node &a,
   return {f * (dx / d), f * (dy / d)};
 }
 
+// BUG: Issue #7 (Repulsive Force)
 Vec2<float> ForceModelEades::totalForce(const Node &a) const {
   float min = 1.0f;
   Vec2<float> total = {0.0, 0.0};

@@ -3,7 +3,7 @@ project(graphV VERSION 0.1)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-aux_source_directory(src SRC_FILES)
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
 add_executable(graphV ${SRC_FILES})
 

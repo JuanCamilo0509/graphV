@@ -4,6 +4,11 @@
 random_device rd;
 mt19937 gen(rd());
 
+Graph::Graph(string dirPath, int width, int height)
+    : dirPath(dirPath), width(width), height(height) {
+  files2Nodes();
+};
+
 vector<string> Graph::getLinks(string file) {
   vector<string> links;
   ifstream in(file);
@@ -35,9 +40,8 @@ int getRandom(int value) {
   return dist(gen);
 };
 
-void Graph::getNodes(const string &rootFolder) {
-  for (auto &entry :
-       std::filesystem::recursive_directory_iterator(rootFolder)) {
+void Graph::files2Nodes() {
+  for (auto &entry : std::filesystem::recursive_directory_iterator(dirPath)) {
     if (entry.is_regular_file()) {
       string path = entry.path().string();
 

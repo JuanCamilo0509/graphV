@@ -28,7 +28,7 @@ public:
   string path;
   vector<Node *> neighbours;
 
-  void moveNode(const Vec2<float> &force, float &t, float damping);
+  void moveNode(const Vec2<float> &force, float t, float damping);
 };
 
 std::ostream &operator<<(ostream &os, const Node &n);

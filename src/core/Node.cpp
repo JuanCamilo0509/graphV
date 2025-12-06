@@ -1,6 +1,6 @@
 #include <Node.hpp>
 
-void Node::moveNode(const Vec2<float> &force, float &t, float damping) {
+void Node::moveNode(const Vec2<float> &force, float t, float damping) {
   this->velocity.x = force.x * t * damping;
   this->velocity.y = force.y * t * damping;
   this->position.x =

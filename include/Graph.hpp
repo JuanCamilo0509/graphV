@@ -1,3 +1,4 @@
+#pragma once
 #include <Node.hpp>
 #include <filesystem>
 #include <fstream>
@@ -9,12 +10,13 @@
 using namespace std;
 namespace fs = std::filesystem;
 class Graph {
+  string dirPath;
   int width;
   int height;
+  vector<string> getLinks(string file);
+  void files2Nodes();
 
 public:
-  Graph(int width, int height) : width(width), height(height) {};
+  Graph(string dirPath, int width, int height);
   unordered_map<string, Node *> nodes;
-  vector<string> getLinks(string file);
-  void getNodes(const string &path);
 };
