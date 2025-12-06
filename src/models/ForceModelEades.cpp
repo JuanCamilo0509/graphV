@@ -11,9 +11,10 @@ Vec2<float> ForceModelEades::atractiveForce(const Node &a,
   float dy = b.position.y - a.position.y;
   float d = sqrt(dx * dx + dy * dy);
   if (d < 0.0001f)
-    d = 0.0001f;
+    d = 0.01f;
   float k = 1.0f; // k = C*sqrt(area/#vertices)
-  float f = (d * d) / k;
+  float c1 = 1.5f;
+  float f = c1 * log(d / k);
   return {f * (dx / d), f * (dy / d)};
 }
 Vec2<float> ForceModelEades::repulsiveForce(const Node &a,
@@ -22,27 +23,25 @@ Vec2<float> ForceModelEades::repulsiveForce(const Node &a,
   float dy = a.position.y - b.position.y;
   float d = sqrt(dx * dx + dy * dy);
   if (d < 0.0001f)
-    d = 0.0001f;
+    d = 0.01f;
   float k = 1.0f;
-  float f = (k * k) / (d * d);
+  float c2 = 0.05f;
+  float f = c2 * (k * k) / (d * d);
 
   return {f * (dx / d), f * (dy / d)};
 }
 
-// BUG: Issue #7 (Repulsive Force)
-Vec2<float> ForceModelEades::totalForce(const Node &a) const {
-  float min = 1.0f;
+Vec2<float> ForceModelEades::totalForce(const Node *a,
+                                        const Graph &graph) const {
   Vec2<float> total = {0.0, 0.0};
-  for (Node *currentNode : a.neighbours) {
-    float distance = sqrt((a.position.x - currentNode->position.x) *
-                              (a.position.x - currentNode->position.x) +
-                          (a.position.y - currentNode->position.y) *
-                              (a.position.y - currentNode->position.y));
-    if (distance < min) {
-      total += repulsiveForce(a, *currentNode);
-    } else {
-      total += atractiveForce(a, *currentNode);
-    }
+  for (const auto &other : graph.nodes) {
+    if (other.second == a)
+      continue;
+    total += repulsiveForce(*a, *other.second);
   }
+
+  for (Node *neighbour : a->neighbours)
+    total += atractiveForce(*a, *neighbour);
+
   return total;
 }
