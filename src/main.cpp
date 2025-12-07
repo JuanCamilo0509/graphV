@@ -1,13 +1,13 @@
 #include "ForceModelEades.hpp"
 #include "Graph.hpp"
-#include "NcursesRenderer.hpp"
 #include "UI.hpp"
+#include "cursesRenderer.hpp"
 #include <chrono>
 #include <thread>
 using namespace std;
 
 int main(int argc, char *argv[]) {
-  NcursesRenderer renderer;
+  cursesRenderer renderer;
   ForceModelEades model;
   int width, height;
   renderer.getScreenSize(width, height);

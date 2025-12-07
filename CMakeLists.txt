@@ -9,8 +9,18 @@ add_executable(graphV ${SRC_FILES})
 
 target_include_directories(graphV PRIVATE include)
 
-find_package(Curses REQUIRED)
-include_directories(${CURSES_INCLUDE_DIR})
-include_directories(${CMAKE_SOURCE_DIR}/include)
 
-target_link_libraries(graphV ${CURSES_LIBRARIES})
+if (WIN32)
+  # Windows → PDCurses
+  find_path(PDCURSES_INCLUDE_DIR NAMES curses.h pdcurses/curses.h)
+  find_library(PDCURSES_LIB NAMES pdcurses REQUIRED)
+
+  target_include_directories(graphV PRIVATE ${PDCURSES_INCLUDE_DIR})
+  target_link_libraries(graphV PRIVATE ${PDCURSES_LIB})
+
+else()
+  # Linux/Unix → ncurses (CMake Curses)
+  find_package(Curses REQUIRED)
+  target_include_directories(graphV PRIVATE ${CURSES_INCLUDE_DIR})
+  target_link_libraries(graphV PRIVATE ${CURSES_LIBRARIES})
+endif()
