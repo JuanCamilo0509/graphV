@@ -13,23 +13,9 @@ int main(int argc, char *argv[]) {
   renderer.getScreenSize(width, height);
   Graph graph(argv[1], width, height);
   UI ui(renderer, graph);
-
-  #pragma region TESTING_ISSUE6
-  
-  for (auto node : graph.nodes)
-  {
-    std::cout << *node.second;
-  }
-
-  #pragma endregion
-
-
-
-  /* TODO: Uncomment When Done Testing
   while (true) {
     ui.render(model);
     ui.update();
     this_thread::sleep_for(chrono::milliseconds(200));
   }
-  */
 }
