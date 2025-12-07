@@ -8,6 +8,6 @@ class UI {
 
 public:
   UI(UIRender &r, Graph graph) : r(r), graph(graph) {};
-  void render(ForceModel &model);
+  void render(ForceModel &model, int width, int height);
   void update();
 };

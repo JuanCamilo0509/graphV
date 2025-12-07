@@ -36,7 +36,7 @@ vector<string> Graph::getLinks(string file) {
 };
 
 int getRandom(int value) {
-  uniform_int_distribution<> dist(0, value);
+  uniform_int_distribution<> dist(0, value - 1);
   return dist(gen);
 };
 

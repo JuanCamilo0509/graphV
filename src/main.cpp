@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   Graph graph(argv[1], width, height);
   UI ui(renderer, graph);
   while (true) {
-    ui.render(model);
+    ui.render(model, width, height);
     ui.update();
     this_thread::sleep_for(chrono::milliseconds(200));
   }

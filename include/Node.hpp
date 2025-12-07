@@ -11,6 +11,11 @@ template <typename T> struct Vec2 {
     y += other.y;
     return *this;
   }
+  Vec2 &operator+(const Vec2 &other) {
+    x = x + other.x;
+    y = y + other.y;
+    return *this;
+  }
 };
 class Node {
 public:
