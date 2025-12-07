@@ -1,4 +1,7 @@
 # GraphV
+
+https://github.com/user-attachments/assets/b558e1c5-f93e-4e7e-9585-d341b2614638
+
 ## Dependencies
 - Ncurses (Linux).
 - PDcurses (Windows).
