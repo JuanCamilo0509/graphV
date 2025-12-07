@@ -24,3 +24,8 @@ else()
   target_include_directories(graphV PRIVATE ${CURSES_INCLUDE_DIR})
   target_link_libraries(graphV PRIVATE ${CURSES_LIBRARIES})
 endif()
+
+find_package(SDL2 REQUIRED)
+
+target_include_directories(graphV PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(graphV PRIVATE ${SDL2_LIBRARIES})
