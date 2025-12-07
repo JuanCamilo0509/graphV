@@ -16,6 +16,6 @@ int main(int argc, char *argv[]) {
   while (true) {
     ui.render(model);
     ui.update();
-    this_thread::sleep_for(chrono::milliseconds(100));
+    this_thread::sleep_for(chrono::milliseconds(200));
   }
 }

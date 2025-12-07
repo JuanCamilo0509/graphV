@@ -12,8 +12,9 @@ public:
     curs_set(0);
   };
   ~NcursesRenderer() { endwin(); }
+  void drawLine(const Node &nodeA, const Node &nodeB) override;
   void getScreenSize(int &x, int &y) override;
-  void draw(int x, int y, const string &text) override;
+  void draw(const Node &node, const string &text) override;
   void clear() override { ::clear(); }
   void refresh() override { ::refresh(); }
 };
