@@ -41,9 +41,18 @@ int getRandom(int value) {
 };
 
 void Graph::files2Nodes() {
-  for (auto &entry : std::filesystem::recursive_directory_iterator(dirPath)) {
+
+  //Set the root directory to the dirPath variable
+  fs::path root = fs::absolute(dirPath);
+
+  for (auto &entry : std::filesystem::recursive_directory_iterator(root)) {
     if (entry.is_regular_file()) {
-      string path = entry.path().string();
+
+      //Grab the relative path of the file (given the root base)
+      fs::path relative_path = fs::relative(entry.path(), root);
+
+      //Prepend ./ to the relative path
+      string path = "./" + relative_path.generic_string();
 
       if (nodes.find(path) == nodes.end()) {
         nodes[path] = new Node(path, getRandom(width), getRandom(height));
