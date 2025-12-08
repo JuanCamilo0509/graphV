@@ -3,9 +3,7 @@ project(graphV VERSION 0.1)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-#std::filesystem requires C++ standard 17+, 20 has lots of other
-#nice things, I would consider C++23 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS NO)
 
