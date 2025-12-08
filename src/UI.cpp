@@ -4,7 +4,14 @@
 void UI::render(ForceModel &model, int width, int height) {
   for (const auto &p : graph.nodes) {
     Node *node = p.second;
-    r.draw(*node, "●");
+    for (Node *neigh : node->neighbours) {
+      r.drawLine(*node, *neigh);
+    }
+  }
+
+  for (const auto &p : graph.nodes) {
+    Node *node = p.second;
+    r.drawNode(*node, "●");
     node->moveNode(model.totalForce(node, graph, width, height), 0.8f, 0.58f);
   }
 }

@@ -13,6 +13,10 @@
 #ifndef _WIN32
 class NcursesRenderer : public UIRender {
 public:
+  float c1 = 1.0f;
+  float c2 = 10.0f;
+  float k1 = 2.0f;
+  float k2 = 5.0f;
   NcursesRenderer() {
     setlocale(LC_ALL, "");
     initscr();
@@ -27,7 +31,7 @@ public:
 
   void drawLine(const Node &nodeA, const Node &nodeB) override;
   void getScreenSize(int &x, int &y) override;
-  void draw(const Node &node, const std::string &text) override;
+  void drawNode(const Node &node, const std::string &text) override;
   void clear() override { ::clear(); }
   void refresh() override { ::refresh(); }
 };

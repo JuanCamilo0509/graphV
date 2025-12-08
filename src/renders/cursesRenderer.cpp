@@ -2,7 +2,7 @@
 #include "cursesRenderer.hpp"
 void cursesRenderer::getScreenSize(int &x, int &y) { getmaxyx(stdscr, y, x); }
 
-void cursesRenderer::draw(const Node &node, const string &text) {
+void cursesRenderer::drawNode(const Node &node, const string &text) {
   for (const auto neig : node.neighbours)
     drawLine(node, *neig);
   attron(COLOR_PAIR(1));

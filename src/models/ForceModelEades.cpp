@@ -2,8 +2,6 @@
 #include <cmath>
 #include <ncurses.h>
 
-ForceModelEades::ForceModelEades() {}
-
 Vec2<float> ForceModelEades::gravitationalForce(const Node &a, const int width,
                                                 const int height) const {
   float cx = width / 2.0f;
@@ -19,9 +17,7 @@ Vec2<float> ForceModelEades::gravitationalForce(const Node &a, const int width,
     return {0.0f, 0.0f};
   }
 
-  float cG = 0.05f;
-
-  float f = cG * d;
+  float f = 0.05f * d;
 
   return {f * (dx / d), f * (dy / d)};
 }
@@ -36,9 +32,7 @@ Vec2<float> ForceModelEades::atractiveForce(const Node &a,
   if (d < eps)
     d = eps;
 
-  float k = 2.0f; // k = C*sqrt(area/#vertices)
-  float c1 = 1.0f;
-  float f = c1 * log(d / k);
+  float f = c1 * log(d / k1);
   return {f * (dx / d), f * (dy / d)};
 }
 Vec2<float> ForceModelEades::repulsiveForce(const Node &a,
@@ -49,9 +43,7 @@ Vec2<float> ForceModelEades::repulsiveForce(const Node &a,
   float d = sqrt(dx * dx + dy * dy);
   if (d < eps)
     d = eps;
-  float k = 5.0f;
-  float c2 = 10.0f;
-  float f = c2 * (k * k) / (d * d);
+  float f = c2 * (k2 * k2) / (d * d);
 
   return {f * (dx / d), f * (dy / d)};
 }
