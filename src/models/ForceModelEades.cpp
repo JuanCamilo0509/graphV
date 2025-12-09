@@ -52,10 +52,10 @@ Vec2<float> ForceModelEades::totalForce(const Node *a, const Graph &graph,
                                         int width, int height) const {
   Vec2<float> total = {0.0, 0.0};
   for (const auto &other : graph.nodes) {
-    if (other.second == a)
+    Node *b = other.second.get();
+    if (b == a)
       continue;
-    total += repulsiveForce(*a, *other.second) +
-             gravitationalForce(*a, width, height);
+    total += repulsiveForce(*a, *b) + gravitationalForce(*a, width, height);
   }
 
   for (Node *neighbour : a->neighbours)

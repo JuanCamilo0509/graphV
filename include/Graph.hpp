@@ -14,9 +14,9 @@ class Graph {
   int width;
   int height;
   vector<string> getLinks(string file);
-  void files2Nodes();
 
 public:
+  void files2Nodes();
   Graph(string dirPath, int width, int height);
-  unordered_map<string, Node *> nodes;
+  unordered_map<string, unique_ptr<Node>> nodes;
 };

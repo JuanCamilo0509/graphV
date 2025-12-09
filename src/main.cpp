@@ -20,12 +20,9 @@ int main(int argc, char *argv[]) {
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT)
         running = false;
-      if (event.type == SDL_KEYDOWN) {
-        if (event.key.keysym.sym == SDLK_ESCAPE) {
-          running = false;
-        }
-      }
     }
+    graph.files2Nodes();
+
     ui.render(model, width, height);
     ui.update();
     this_thread::sleep_for(chrono::milliseconds(200));

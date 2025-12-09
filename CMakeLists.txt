@@ -29,6 +29,14 @@ else()
   target_link_libraries(graphV PRIVATE ${CURSES_LIBRARIES})
 endif()
 
+target_compile_options(graphV PRIVATE
+    -fsanitize=address -fno-omit-frame-pointer -g
+)
+
+target_link_options(graphV PRIVATE
+    -fsanitize=address
+)
+
 find_package(SDL2 REQUIRED)
 
 target_include_directories(graphV PRIVATE ${SDL2_INCLUDE_DIRS})

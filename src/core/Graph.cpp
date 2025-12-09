@@ -41,47 +41,59 @@ int getRandom(int value) {
 };
 
 void Graph::files2Nodes() {
-
-  //Set the root directory to the dirPath variable
   fs::path root = fs::absolute(dirPath);
 
-  for (auto &entry : std::filesystem::recursive_directory_iterator(root)) {
-    if (entry.is_regular_file()) {
+  std::unordered_set<std::string> currentFiles;
+  for (auto &entry : fs::recursive_directory_iterator(root)) {
+    if (!entry.is_regular_file())
+      continue;
+    fs::path rel = fs::relative(entry.path(), root);
+    std::string path = "./" + rel.generic_string();
+    currentFiles.insert(path);
+  }
 
-      //Grab the relative path of the file (given the root base)
-      fs::path relative_path = fs::relative(entry.path(), root);
+  std::unordered_map<std::string, std::unique_ptr<Node>> newNodes;
+  newNodes.reserve(nodes.size());
 
-      //Prepend ./ to the relative path
-      string path = "./" + relative_path.generic_string();
-
-      if (nodes.find(path) == nodes.end()) {
-        nodes[path] = new Node(path, getRandom(width), getRandom(height));
-      }
+  for (const auto &path : currentFiles) {
+    auto it = nodes.find(path);
+    if (it != nodes.end()) {
+      newNodes.emplace(path, std::move(it->second));
+    } else {
+      newNodes.emplace(path, std::make_unique<Node>(path, getRandom(width),
+                                                    getRandom(height)));
     }
   }
 
-  unordered_map<string, vector<Node *>> inverted;
+  nodes.swap(newNodes);
 
-  for (auto &p : nodes) {
-    const string &path = p.first;
-    Node *node = p.second;
+  for (auto &p : nodes)
+    p.second->neighbours.clear();
 
-    vector<string> links = getLinks(path);
+  std::unordered_map<std::string, std::vector<std::string>> inverted;
+  inverted.reserve(nodes.size());
 
-    for (const string &ref : links) {
-      inverted[ref].push_back(node);
+  for (const auto &p : nodes) {
+    const std::string &path = p.first;
+    std::vector<std::string> links = getLinks(path);
+    for (const auto &ref : links) {
+      inverted[ref].push_back(path);
     }
   }
 
-  for (auto &p : nodes) {
-    const string &path = p.first;
-    Node *target = p.second;
+  for (const auto &p : inverted) {
+    const std::string &targetPath = p.first;
+    auto itTarget = nodes.find(targetPath);
+    if (itTarget == nodes.end())
+      continue;
 
-    auto it = inverted.find(path);
-    if (it != inverted.end()) {
-      for (Node *origin : it->second) {
-        origin->neighbours.push_back(target);
-      }
+    Node *target = itTarget->second.get();
+    for (const auto &originPath : p.second) {
+      auto itOrigin = nodes.find(originPath);
+      if (itOrigin == nodes.end())
+        continue;
+      Node *origin = itOrigin->second.get();
+      origin->neighbours.push_back(target);
     }
   }
 }
